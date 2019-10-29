@@ -1,0 +1,188 @@
+import numpy as num
+
+def DodajKrawedz():
+    m = num.loadtxt('test1.txt', dtype=int)
+    w1 = input("1 wierzchołek: ")
+    w2 = input("2 wierzchołek: ")
+    w1=int(w1)
+    w2=int(w2)
+    if(w1 == w2):
+        m[w1 - 1][w2 - 1] = (m[w1 - 1][w2 - 1]) + 1
+        num.savetxt('test1.txt', m, fmt='%d')
+    else:
+        m[w1-1][w2-1] = (m[w1-1][w2-1])+1
+        m[w2-1][w1-1] = (m[w2-1][w1-1])+1
+        num.savetxt('test1.txt', m, fmt='%d')
+        print("Zapisano")
+    input()
+
+def UsunKrawedz():
+    m = num.loadtxt('test1.txt', dtype=int)
+    w1 = input("1 wierzchołek: ")
+    w2 = input("2. wierzchołek: ")
+    w1 = int(w1)
+    w2 = int(w2)
+    if m[w1-1][w2-1] == 0 or m[w2-1][w1-1] == 0:
+        print("\nKrawędź nie istnieje")
+    elif w1 == w2:
+        m[w1 - 1][w2-1] = (m[w1-1][w2-1])-1
+        num.savetxt('test1.txt', m, fmt='%d')
+    else:
+        m[w1-1][w2-1] = (m[w1-1][w2-1])-1
+        m[w2 - 1][w1 - 1] = (m[w2 - 1][w1 - 1]) - 1
+        num.savetxt('test1.txt', m, fmt='%d')
+        print("Zapisano")
+    input()
+def DodajWierzcholek():
+
+    m = num.loadtxt('test1.txt', dtype=int)
+    dlugoscWiersza = num.size(m, 1)
+    dlugoscKolumny = num.size(m,0)
+    b = num.zeros((dlugoscKolumny, 1))
+    z = num.hstack((m, b))
+    num.savetxt('test1.txt', z, fmt='%d')
+    wiersz = num.zeros((dlugoscKolumny+1))
+    nowa = num.vstack((z, wiersz))
+    num.savetxt('test1.txt', nowa, fmt='%d')
+    input()
+
+def UsunWierzcholek():
+    m = num.loadtxt('test1.txt', dtype=int)
+    w1 = input(("Który wierzchołek chcesz usunąć: "))
+    w1 = int(w1)
+    m = num.delete(m,w1-1,0)
+    m = num.delete(m,w1-1,1)
+    num.savetxt('test1.txt', m, fmt='%d')
+    input()
+
+def RozmiarMacierzy():
+    m = num.loadtxt('test1.txt', dtype=int)
+    print(num.size(m,1))  #dlugosc wiersza
+    print(num.size(m,0))  #długość kolumny
+    input()
+
+def StopienWierzcholka():
+    m = num.loadtxt('test1.txt', dtype=int)
+    w = input("Podaj numer wierzchołka: ")
+    w = int(w)
+    suma = 0
+    suma=int(suma)
+    petla = 0
+
+
+    for i in range(num.size(m,1)):
+        if((w-1)==i and m[i][i]>0):
+            suma=suma+(m[i][i]*2)
+        #if(m[i][i]>0):
+         #   suma=suma+(m[i][i]*2)
+          #  print(m[i][i])
+
+        else:
+            suma = suma + m[w - 1][i]
+
+    print("Stopień wierzchołka "+str(w)+" jest równy: "+str(suma))
+    input()
+
+def MinMax():
+    m = num.loadtxt('test1.txt', dtype=int)
+    zerowa = num.zeros(num.size(m,1))
+
+    for i in range(num.size(m,1)):
+        for j in range(num.size(m, 1)):
+            if(m[i][i]>0 and j==0):
+                zerowa[i]=zerowa[i]+(m[i][i]*2)
+
+            else:
+                zerowa[i] = zerowa[i] + m[i][j]
+    print(zerowa)
+    minimalny = zerowa[0]
+    maksymalny = 0
+    for i in range(zerowa.size):
+        if (zerowa[i] < minimalny):
+            minimalny = zerowa[i]
+    minimalny = int(minimalny)
+    print("Minimalny stopień wierzchołka: "+str(minimalny))
+
+    for i in range(zerowa.size):
+
+        if (zerowa[i] > maksymalny):
+            maksymalny = zerowa[i];
+    maksymalny = int(maksymalny)
+    print("Maksymalny stopień wierzchołka: "+str(maksymalny))
+    input()
+
+def WyswietlMacierz():
+    m = num.loadtxt('test1.txt', dtype=int)
+    print(m)
+    input()
+
+def IlePNPar():
+    m = num.loadtxt('test1.txt', dtype=int)
+    zerowa = num.zeros(num.size(m, 1))
+    np = 0
+    p = 0
+    for i in range(num.size(m, 1)):
+        for j in range(num.size(m, 1)):
+            if (m[i][i] > 0 and j == 0):
+                zerowa[i] = zerowa[i] + (m[i][i] * 2)
+
+            else:
+                zerowa[i] = zerowa[i] + m[i][j]
+    print(zerowa)
+    for i in range(zerowa.size):
+        if zerowa[i]%2 == 0:
+            p=p+1
+        else: np = np+1
+    print("Ilość wierzchołków stopnia parzystego: "+str(p))
+    print("Ilość wierzchołków stopnia nieparzystego: "+str(np))
+    input()
+
+def Ciag():
+    m = num.loadtxt('test1.txt', dtype=int)
+    zerowa = num.zeros(num.size(m, 1))
+    np = 0
+    p = 0
+    for i in range(num.size(m, 1)):
+        for j in range(num.size(m, 1)):
+            if (m[i][i] > 0 and j == 0):
+                zerowa[i] = zerowa[i] + (m[i][i] * 2)
+            else:
+                zerowa[i] = zerowa[i] + m[i][j]
+    x = sorted(zerowa, reverse=True)
+    for i in range(num.size(m,1)):
+        print(int(x[i]))
+    print(x)
+    input()
+
+
+def Menu():
+    koniec = False
+    while koniec != True:
+        print("\n1. Dodaj krawędź")
+        print("2. Usuń krawędź")
+        print("3. Dodaj wierzchołek")
+        print("4. Usuń wierzchołek")
+        print("5. Stopień wierzchołka")
+        print("6. Wyświetl macierz sąsiedztwa")
+        print("7. Min, Max stopień wierzchołka")
+        print("8. Ilość wierzchołków parzystych i nieparzystych")
+        print("9. Wyświetl ciąg")
+        print("10. Zakończ program")
+
+        wybor = input("Wybierz opcję: ")
+        wybor = int(wybor)
+        if(wybor==1):DodajKrawedz()
+        elif(wybor==2):UsunKrawedz()
+        elif(wybor==3):DodajWierzcholek()
+        elif(wybor==4):UsunWierzcholek()
+        elif (wybor == 5):StopienWierzcholka()
+        elif(wybor==6):WyswietlMacierz()
+        elif(wybor==7): MinMax()
+        elif(wybor==8):IlePNPar()
+        elif(wybor==9): Ciag()
+        elif(wybor ==10):
+            print("\nKoniec")
+            koniec = True
+        else:print("Błędny wybór")
+
+Menu()
