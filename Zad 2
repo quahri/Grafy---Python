@@ -1,0 +1,50 @@
+import numpy as num
+
+def czyC3():
+    m = num.loadtxt('test1.txt', dtype=int)
+    x = num.dot(m,m)
+    z = num.dot(m,x)
+    przekatna = z.diagonal()
+    print(z)
+    print(przekatna)
+    suma = 0
+    suma = int(suma)
+    for i in range(num.size(przekatna)):
+        suma = suma + przekatna[i]
+    if suma > 0: print("Istnieje ciąg C3")
+    else: "Ciąg C3 nie istnieje"
+    print("Suma na głównej przekątnej: "+str(suma))
+    input()
+
+def czyC3N():
+    m = num.loadtxt('test1.txt', dtype=int)
+    licznik = 0
+    licznik = int(licznik)
+    x = num.zeros((licznik, 2))
+    for i in range(num.size(m,1)):
+        for j in range(num.size(m,1)):
+            if(m[i][j]>0 and i!=j):
+                x=num.array( num.argwhere(m>0))
+                print(x)
+                num.savetxt('sciezki.txt', x, fmt='%d')
+    x = num.loadtxt('sciezki.txt', dtype=int)
+    print("sciezki")
+    print(x)
+
+  #  for i in range(num.size(x,0)):
+   #     for j in range(2):
+    #        print(x[i][j])
+    input()
+def Menu():
+    koniec = False
+    while koniec != True:
+        print("\n1. Wersja z mnożeniem macierzy: ")
+        print("2. Wersja naiwna")
+
+        wybor = input("Wybierz opcję: ")
+        wybor = int(wybor)
+        if(wybor==1): czyC3()
+        elif(wybor==2):czyC3N()
+        elif (wybor == 3): koniec = True
+
+Menu()
