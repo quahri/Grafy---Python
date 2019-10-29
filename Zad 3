@@ -1,0 +1,75 @@
+import numpy as num
+
+n = input("Podaj ilość wierzchołków: ")
+n=int(n)
+c = num.zeros(n)
+for i in range(n):
+    c[i]=input("Podaj stopień wierzchołka "+str(i+1)+" ")
+graficzny = 1
+s=0
+s=int(s)
+for i in range(num.size(c)):
+    s = s + c[i]
+if s%2 !=0:
+    graficzny=0
+
+else:
+    flag = 1
+    while (flag == 1):   #sortowanie
+        flag = 0
+        for i in range(n-1):
+            if (c[i] < c[i + 1]):
+                s=c[i]
+                c[i]=c[i+1]
+                c[i+1]=s
+                flag=1
+j=0
+print(c)
+
+# Twierdzenie P. Erdos, T. Gallai
+#j == 0
+while ((graficzny==1) and (j<n-1)):
+    s=0  # s jest sumą stopni wierzchołków
+    for i in range(j+1):
+        s = s + c[i] #sumowanie stopni wierzchołków
+    smin = 0
+    for i in range(1+j, n): #zaczynamy sumowanie od 1+j
+        if ((j + 1) < c[i]):  #c[i] zawiera stopnie wierzchołków
+            smin=smin+(j+1)
+        else:
+            smin = smin + c[i]
+    if (s > (j * (j + 1) + smin)):
+        graficzny = 0
+    else:
+        j = j + 1
+
+if graficzny == 1:
+    print("Ciąg jest graficzny")
+    tmp = 0
+    tmp = int(tmp)
+    while tmp!=n:
+        tmp = 0
+        utworzona = num.random.randint(2, size=(n, n))
+        stopnieWiersze = num.zeros(n)
+        stopnieKolumny = num.zeros(n)
+
+        for i in range(num.size(utworzona,1)):
+            for j in range(num.size(utworzona, 1)):
+                    stopnieWiersze[i] = stopnieWiersze[i] + utworzona[i][j]
+        for i in range(num.size(utworzona,1)):
+            for j in range(num.size(utworzona, 1)):
+                stopnieKolumny[i] = stopnieKolumny[i] + utworzona[j][i]
+
+        for i in range(n):
+            if(stopnieWiersze[i]==c[i] and stopnieKolumny[i]==c[i] and utworzona[i][i]<1):
+                tmp=tmp+1
+
+        print(stopnieWiersze)
+        print(stopnieKolumny)
+        print("TMP: " + str(tmp))
+        print(utworzona)
+else:
+    print("Ciąg nie jest graficzny")
+    input()
+
+
